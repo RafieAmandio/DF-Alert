@@ -384,7 +384,6 @@ Common issues and solutions:
 - Use WebAssembly for intensive client-side computations
 - Configure CDN for static assets
 
-For more detailed documentation, visit our [Wiki](https://github.com/yourusername/df-alert/wiki).
 
 ## 📚 References
 The technical approach is grounded in published research, including:
