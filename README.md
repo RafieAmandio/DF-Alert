@@ -252,6 +252,140 @@ Two primary business approaches:
    - Updates and lifetime support included
   
 
+## 🛠️ Technical Setup & Deployment
+
+### Prerequisites
+- Node.js (v18.0.0 or higher)
+- npm or yarn package manager
+- FLIR ONE SDK (for thermal camera integration)
+- MongoDB (v6.0 or higher)
+- Python 3.8+ (for ML model inference)
+
+### Environment Setup
+1. Clone the repository:
+```bash
+git clone https://github.com/yourusername/df-alert.git
+cd df-alert
+```
+
+2. Install dependencies:
+```bash
+# Install frontend dependencies
+npm install
+
+# Install Python dependencies
+pip install -r requirements.txt
+```
+
+3. Configure environment variables:
+Create a `.env` file in the root directory:
+```env
+# App Configuration
+NODE_ENV=development
+PORT=3000
+
+# MongoDB Configuration
+MONGODB_URI=mongodb://localhost:27017/df-alert
+
+# ML Model Configuration
+MODEL_PATH=/path/to/model
+THERMAL_THRESHOLD=0.75
+
+# API Keys
+FLIR_SDK_KEY=your_flir_sdk_key
+```
+
+### Development
+1. Start the development server:
+```bash
+npm run dev
+```
+
+2. Start the ML inference server:
+```bash
+python scripts/inference_server.py
+```
+
+3. Run tests:
+```bash
+# Run frontend tests
+npm test
+
+# Run backend tests
+npm run test:backend
+
+# Run ML model tests
+python -m pytest tests/
+```
+
+### Production Deployment
+
+#### Docker Deployment
+1. Build the Docker image:
+```bash
+docker build -t df-alert .
+```
+
+2. Run the container:
+```bash
+docker run -p 3000:3000 -d df-alert
+```
+
+#### Manual Deployment
+1. Build the production bundle:
+```bash
+npm run build
+```
+
+2. Start the production server:
+```bash
+npm start
+```
+
+### API Documentation
+The API endpoints are documented using Swagger UI and can be accessed at `/api-docs` when running the development server.
+
+Key endpoints:
+- `POST /api/analyze` - Submit RGB and thermal images for analysis
+- `GET /api/results/:scanId` - Retrieve analysis results
+- `POST /api/calibrate` - Calibrate thermal camera settings
+
+### Monitoring & Logging
+- Application logs are stored in `/logs`
+- Monitoring dashboard available at `/monitoring`
+- Health check endpoint: `/health`
+
+### Security Considerations
+- All API endpoints are protected with JWT authentication
+- Thermal image data is encrypted at rest
+- HIPAA compliance measures implemented for PHI
+- Regular security audits and penetration testing recommended
+
+### Troubleshooting
+Common issues and solutions:
+1. Thermal camera not detected:
+   - Ensure FLIR ONE SDK is properly installed
+   - Check USB connection
+   - Verify camera permissions
+
+2. ML model inference errors:
+   - Confirm model path in environment variables
+   - Verify Python dependencies
+   - Check GPU availability if using CUDA
+
+3. Database connection issues:
+   - Verify MongoDB is running
+   - Check connection string
+   - Ensure network connectivity
+
+### Performance Optimization
+- Enable Redis caching for frequent queries
+- Implement image compression for thermal data
+- Use WebAssembly for intensive client-side computations
+- Configure CDN for static assets
+
+For more detailed documentation, visit our [Wiki](https://github.com/yourusername/df-alert/wiki).
+
 ## 📚 References
 The technical approach is grounded in published research, including:
 1. Balbinot L, et al. (2012) - Plantar thermography for diabetic neuropathy diagnosis 🔍
